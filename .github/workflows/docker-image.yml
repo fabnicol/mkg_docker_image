@@ -23,7 +23,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run:  docker build . --file Dockerfile --tag mygentoo:release-master
+      run: |
+        docker build . --file Dockerfile --tag mygentoo:release-master
+        docker save -o mygentoo-release-master.tar mygentoo:release-master
+        xz -9 mygentoo-release-master.tar
+        b2sum mygentoo:release-master.tar.xz > checksums.txt
+        sha512sum mygentoo:release-master.tar.xz >> checksums.txt
+        
+        
       
     - uses: dev-drprasad/delete-tag-and-release@v0.2.0
       with:
@@ -36,15 +43,16 @@ jobs:
       run: |
         set -x
         assets=()
-        for asset in checksums.txt mygentoo:release-master; do
+        tag_name="release-master"
+        for asset in checksums.txt mygentoo-${tag_name}.tar.xz; do
         assets+=("-a" "$asset")
         done
-        tag_name="release-master"
         hub release create  "${assets[@]}" \
         -m "Release $tag_name" \
         -m "This release was automatically created by the Git Actions workflow corresponding to directory .github in the repository." \
-        -m "The output are a checksum file and a Docker image for the corresponding branch." \
-        -m "File **mygentoo:$tag_name** is the custom MKG Docker image built from latest official stage3 and portage archives." \
+        -m "The output are a checksum file and a compressed Docker image for the corresponding branch." \
+        -m "File **mygentoo-${tag_name}.tar.xz** is the compressed custom MKG Docker image built from latest official stage3 and portage archives." \
+        -m "Download and uncompress it using `xz -d`." \
         -m "To create an updated Gentoo distribution, start a Docker image as indicated in the README.
         -m "You can create an install ISO and a CloneZilla installer medium /dev/sdX by running:" \
         -m "     # mkg $tag_name from_vm vm=name_of_your_VB_machine device_installer ext_device=sdX gentoo.iso"  \
