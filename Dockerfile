@@ -43,7 +43,7 @@ RUN eselect profile set 1
 # which some packages want.
 
 RUN emerge -u dev-vcs/git 2>&1 | tee -a log
-RUN git clone --depth=1 https://github.com/fabnicol/mkg.git \
+RUN git clone -b gnome --single-branch --depth=1 https://github.com/fabnicol/mkg.git \
     && cd /mkg \
     && cp -vf .config /usr/src/linux  2>&1 | tee -a log
 RUN cd /usr/src/linux && make syncconfig \
