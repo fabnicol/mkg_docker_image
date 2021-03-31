@@ -1,8 +1,8 @@
 # name the portage image
-FROM docker.io/gentoo/portage:ilatest AS portage
+FROM gentoo/portage:latest AS portage
 
 # image is based on stage3-amd64
-FROM docker.io/gentoo/stage3:amd64-latest 
+FROM gentoo/stage3:amd64 
 
 # copy the entire portage volume in
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
@@ -83,7 +83,8 @@ RUN emerge -uDN --with-bdeps=y @world 2>&1 | tee -a log \
 RUN emerge --depclean 2>&1 | tee -a log
 RUN revdep-rebuild 2>&1 | tee -a log \
       && echo "[MSG] Docker image ready. Check build log."
-RUN env-update
+RUN env-update 
+RUN rm -rf /var/cache/distfiles  /var/tmp/* /tmp/* /var/log/* /var/db/repos/gentoo/*
 
 
 
