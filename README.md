@@ -9,12 +9,12 @@ It draws upon the official [Gentoo stage3 AMD64 Docker image](https://github.com
 
 You will need to update docker to at least version 20.10, enable experimental docker features and add the [`buildx` plugin](https://github.com/docker/buildx) if you do not already have installed it.   
 
-First build fresh official Gentoo portage and stage3 images, following indications given by the [official site](https://github.com/gentoo/gentoo-docker-images): downlad this rpository and within it run:  
+First build fresh official Gentoo portage and stage3 images, following indications given by the [official site](https://github.com/gentoo/gentoo-docker-images): download this repository and within it run:  
 
 `# TARGET=portage ./build.sh`  
 `# TARGET=stage3-amd64 ./build.sh`  
 
-You created **docker.io/gentoo/stage3:amd64** and **docker.io/library/newgentoo:1.0** with the above commands. You will have to pull then from cache befor using them:
+You created **docker.io/gentoo/stage3:amd64** and **docker.io/library/newgentoo:1.0** with the above commands. You will have to pull then from cache before using them:
 
 `#docker image pull docker.io/gentoo/portage`    
 `#docker image pull docker.io/gentoo/stage3:amd64`   
