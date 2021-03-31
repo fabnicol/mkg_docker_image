@@ -65,17 +65,16 @@ A nice way to avoid long command lines is to add to your **~/.bashrc**:
   
 so that after running `source ~/.bashrc`, you just have to call mkg as if it were an installed script:
 
-`mkg [your image name first: here mygentoo:1.0] [your mkg argument names: gentoo2.iso ncpus=2 verbose [...]`    
+`# mkg [your image name first: here mygentoo:1.0] [your mkg argument names: gentoo2.iso ncpus=2 verbose [...]]`    
   
 [note the ID when the function returns]  
 
 You can check the container state by shelling back into it:
 
-`docker exec -it ID bash`
+`# docker exec -it ID bash`    
 
 and within it examine **nohup.out** which logs the job. Then exit as usually (`Ctrl-P, Ctrl-Q`).   
-
-
+   
 ### Reusing MKG Docker images 
 
 Images built as indicated above or released in the Release section can be reused in multi-stage builds as follows.      
