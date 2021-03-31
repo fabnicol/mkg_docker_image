@@ -57,7 +57,7 @@ so that you can monitor the build in **nohup.out**
 
 Alternatively you can run your command line from the host:    
 
-`# docker run -device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log mygentoo:1.0 -- [nohup] ./mkg [your options] [&]`  
+`# docker run --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log mygentoo:1.0 -- [nohup] ./mkg [your options] [&]`  
 
 ### Reusing MKG Docker images 
 
