@@ -7,7 +7,7 @@ It draws upon the official [Gentoo stage3 AMD64 Docker image](https://github.com
 
 ### Building Gentoo official portage and stage3 images first
 
-You will need to enable experimental docker features and add the [`buildx` plugin](https://github.com/docker/buildx) if you do not already have installed it.   
+You will need to update docker to at least version 20.10, enable experimental docker features and add the [`buildx` plugin](https://github.com/docker/buildx) if you do not already have installed it.   
 
 First build fresh official Gentoo portage and stage3 images, following indications given by the [official site](https://github.com/gentoo/gentoo-docker-images): downlad this rpository and within it run:  
 
@@ -41,7 +41,7 @@ The following Dockerfile updates the image:
     FROM mygentoo:1.0 as build
     
     # Use a current base stage3 image
-    FROM gentoo/stage3:amd64
+    FROM stage3:amd64
     
     WORKDIR /
     
