@@ -76,6 +76,19 @@ You can check the container state by shelling back into it:
 `# docker exec -it ID bash`    
 
 and within it examine **nohup.out** which logs the job. Then exit as usually (`Ctrl-P, Ctrl-Q`).   
+
+### Switching from Plasma to Gnome and back
+
+You should create one image for Gnome and another for Plasma.   
+Just checkout the **gnome** branch of this repository, then build your image and run as above without modification to obtain a Gnome desktop rather than a default Plasma desktop. If you want to preserve both options, it is advised to tag your images accordingly. For example, checkout the **gnome** branch and run:
+
+`# docker build -t mygentoo:gnome-1.0 .`  
+
+When completed checkout back to the **master** branch and run: 
+
+`# docker build -t mygentoo:plasma-1.0 .`  
+
+Then you can run either image using the same `mkg()` function in ~/.bashrc as above.  
    
 ### Reusing MKG Docker images 
 
