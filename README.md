@@ -69,7 +69,7 @@ so that after running `source ~/.bashrc`, you just have to call mkg as if it wer
   
 [note the ID when the function returns]  
 
-Note that `gui=false` is already set in this launch mode, so it does not be to be specified (and should not be overridden).  
+Note that `gui=false` is already set in this launch mode, so it does not need to be specified (and should not be overridden).  
 
 You can check the container state by shelling back into it:
 
