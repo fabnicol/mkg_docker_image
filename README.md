@@ -30,12 +30,41 @@ Allow for some time (possibly several hours) to build, as all is built from sour
 
 ## Using the Docker image in a Dockerfile
 
-Say you just built **docker.io/gentoo/mygentoo:1.0**, and as for the other two base images, firt pull it from cache:
+### Running MKG within the container
+  
++ Say you just built **docker.io/gentoo/mygentoo:1.0**, and as for the other two base images, firt pull it from cache:
 
 `#docker image pull docker.io/gentoo/mygentoo:1.0`   
+
++ Now run the container using:  
+`# docker run -it --device /dev/vboxdrv -v /dev/log mygentoo:1.0 bash`   
++ Once in the container, note its ID on the left of the shell  input line.   
++ If the image contains an **mkg** directory, run `git pull` within it to update the sources.   
+Otherwise (depending on versions), clone the *mkg* repository:   
+`# git clone --depth=1 https://github.com/fabnicol/mkg.git`   
+and then `cd` to directory **mkg**.   
++ Run your `./mkg` command line, remembering to use `gui=false` and not to use `share_root`, `shared_dir` or `hot_install`  
++ Preferably use: 
+`# nohup (...) &`  
+so that you can monitor the build in **nohup.out**   
++ Once the virtual machine is safely launched, monitor the run using: 
+`# tail -f nohup.out`   
++ Once the process is safely running, exit using Ctrl - p Ctrl - q. 
++ You may come back again into the container by running:      
+`#  docker exec -it ID bash`   
++ You may follow the build from your host by running:
+`# docker cp ID:/mkg/nohup.out . && tail -n200 nohup.out `     
   
-This image can be reused in multi-stage builds as follows. 
-The following Dockerfile updates the image:
+### Running MKG from the host
+
+Alternatively you can run your command line from the host:
+
+`# docker run -device /dev/vboxdrv -v /dev/log mygentoo:1.0 -- [nohup] ./mkg [your options] [&]`  
+
+### Reusing MKG Docker images 
+
+Images built as indicated above or released in the Release section can be reused in multi-stage builds as follows.   
+The following Dockerfile updates the image:    
 
     # name the portage image
     FROM mygentoo:1.0 as build
