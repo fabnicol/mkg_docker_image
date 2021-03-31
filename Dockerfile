@@ -1,8 +1,8 @@
 # name the portage image
-FROM gentoo/portage:latest as portage
+FROM docker.io/gentoo/portage:ilatest AS portage
 
 # image is based on stage3-amd64
-FROM gentoo/stage3-amd64:latest
+FROM docker.io/gentoo/stage3:amd64-latest 
 
 # copy the entire portage volume in
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
@@ -21,7 +21,17 @@ RUN echo 'app-emulation/virtualbox -alsa -debug -doc dtrace headless -java libre
 RUN mv new.use /etc/portage/package.use
 RUN echo '>=app-emulation/virtualbox-extpack-oracle-6.1.18.142142 PUEL' \
            >> /etc/portage/package.license
-RUN mkdir -p /etc/portage/package.accept_keywords && echo '>=sys-apps/sandbox ~amd64' > /etc/portage/package.accept_keywords/sandbox
+RUN mkdir -p /etc/portage/package.accept_keywords && echo '>=sys-apps/sandbox-2.21 ~amd64' > /etc/portage/package.accept_keywords/sandbox
+# Notably dev-python/setuptools and a couple of other python dev tools
+# will be obsolete. No other cautious way than unmerge/remerge
+RUN emerge --unmerge dev-python/* 2>&1 | tee -a log   
+RUN emerge -uDN dev-lang/python 2>&1 | tee -a log
+RUN emerge -uDN dev-python/setuptools 2>&1 | tee -a log
+RUN emerge -u1 portage
+RUN emerge -u sys-devel/gcc
+RUN emerge gcc-config
+RUN gcc-config $(gcc-config -l| wc -l)  && source /etc/profile
+RUN emerge glibc binutils 
 
 # Kernel sources must be available for some package merges
 
@@ -46,13 +56,6 @@ RUN cd /usr/src/linux && make syncconfig \
 # Also, `uuidgen' in util-linux is an MKG dependency
 
 RUN USE=caps emerge -u sys-apps/util-linux 2>&1 | tee -a log
-
-# Notably dev-python/setuptools and a couple of other python dev tools
-# will be obsolete. No other cautious way than unmerge/remerge
-
-RUN emerge --unmerge dev-python/* 2>&1 | tee -a log   
-RUN emerge -uDN dev-lang/python 2>&1 | tee -a log
-RUN emerge -uDN dev-python/setuptools 2>&1 | tee -a log
 
 # Although the container is console-only, virtualbox packages 
 # have opengl dependencies that cannot be turned off using USE values. 
