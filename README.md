@@ -35,7 +35,7 @@ Allow for some time (possibly several hours) to build, as all is built from sour
 + Say you just built **docker.io/gentoo/mygentoo:1.0**, and as for the other two base images, firt pull it from cache:    
 `#docker image pull docker.io/gentoo/mygentoo:1.0`   
 + Now run the container using:  
-`# docker run -it --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log mygentoo:1.0 bash`   
+`# docker run -it --entrypoint bash --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log mygentoo:1.0`   
 + Once in the container, note its ID on the left of the shell  input line.   
 + If the image contains an **mkg** directory, run `git pull` within it to update the sources.   
 Otherwise (depending on versions), clone the *mkg* repository:   
@@ -55,10 +55,28 @@ so that you can monitor the build in **nohup.out**
   
 ### Running MKG from the host
 
-Alternatively you can run your command line from the host:    
+Alternatively you can run your command line from the host, preferably in daemon mode (-d):    
 
-`# docker run -device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log mygentoo:1.0 -- [nohup] ./mkg [your options] [&]`  
+`# docker run -dit --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log mygentoo:1.O [your mkg options]`  
 
+A nice way to avoid long command lines is to add to your **~/.bashrc**:
+
+`alias mkg='sudo docker run -dit --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log "$@"'`   
+  
+so that after running `source ~/.bashrc`, you just have to call mkg as if it were an installed script:
+
+`# mkg [your image name first: here mygentoo:1.0] [your mkg argument names: gentoo2.iso ncpus=2 verbose [...]]`    
+  
+[note the ID when the function returns]  
+
+Note that `gui=false` is already set in this launch mode, so it does not be to be specified (and should not be overridden).  
+
+You can check the container state by shelling back into it:
+
+`# docker exec -it ID bash`    
+
+and within it examine **nohup.out** which logs the job. Then exit as usually (`Ctrl-P, Ctrl-Q`).   
+   
 ### Reusing MKG Docker images 
 
 Images built as indicated above or released in the Release section can be reused in multi-stage builds as follows.      
