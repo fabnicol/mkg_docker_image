@@ -55,9 +55,26 @@ so that you can monitor the build in **nohup.out**
   
 ### Running MKG from the host
 
-Alternatively you can run your command line from the host:    
+Alternatively you can run your command line from the host, preferably in daemon mode (-d):    
 
-`# docker run --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log mygentoo:1.0 bash -c "cd mkg && [nohup] ./mkg [your options] [&]"`  
+`# docker run -dit --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log mygentoo:1.O [your mkg options]`  
+
+A nice way to avoid long command lines is to add to your **~/.bashrc**:
+
+`mkg() { docker run -dit --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log mygentoo:1.O "$@" }`  
+
+so that after running `source ~/.bashrc`, you just have to call mkg as if it were an installed script:
+
+`mkg gentoo2.iso ncpus=2 verbose [...]`    
+  
+[note the ID when the function returns]  
+
+You can check the container state by shelling back into it:
+
+`docker exec -it ID bash`
+
+and within it examine **nohup.out** which logs the job. Then exit as usually (`Ctrl-P, Ctrl-Q`).   
+
 
 ### Reusing MKG Docker images 
 
