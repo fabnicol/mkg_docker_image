@@ -41,7 +41,7 @@ The following Dockerfile updates the image:
     FROM mygentoo:1.0 as build
     
     # Use a current base stage3 image
-    FROM stage3:amd64
+    FROM gentoo/stage3:amd64
     
     WORKDIR /
     
