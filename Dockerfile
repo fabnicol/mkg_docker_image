@@ -85,6 +85,6 @@ RUN revdep-rebuild 2>&1 | tee -a log \
       && echo "[MSG] Docker image ready. Check build log."
 RUN env-update 
 RUN rm -rf /var/cache/distfiles  /var/tmp/* /tmp/* /var/log/* /var/db/repos/gentoo/*
-
-
+WORKDIR mkg
+ENTRYPOINT ["nohup", "./mkg", "gui=false", "&"]
 
