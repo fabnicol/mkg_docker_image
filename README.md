@@ -28,6 +28,21 @@ In the source directory, run:
 Adjust with the tag name you want (here mygentoo:1.0).   
 Allow for some time (possibly several hours) to build, as all is built from source.  
 
+### (Optional) Compress the image
+
+For packaging purposes it is advised to compress the resulting image using [docker-squash](https://github.com/jwilder/docker-squash).  
+Optionally clean the container of kernel sources:   
+`# docker run --entrypoint bash -it mygentoo:1.0`      
+[Note the container ID on return.]   
+`(container)# rm -rf /usr/src/linux && exit`   
+Then commit the container and tag it:   
+`# docker commit ID`   
+`# docker tag ID mygentoo:1.1`    
+Then use docker-squash:   
+`# docker save ID | docker-squash | docker load`     
+Finally use  zip or xz compression to archive the squash tarball.     
+The resulting compressed tarball is about 15 % the size of the Docker image created by the above build stage.  
+   
 ## Using the Docker image in a Dockerfile
 
 ### Running MKG within the container
