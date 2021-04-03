@@ -51,7 +51,7 @@ Then use docker-squash:
 Finally use **zip** or **xz** compression to archive the squash tarball.     
 The resulting compressed tarball is about 15 % the size of the Docker image created by the above build stage.  
     
-## Using the Docker image in a Dockerfile
+## Using the Docker image
 
 ### Running MKG within the container
       
