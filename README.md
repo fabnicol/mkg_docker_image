@@ -132,4 +132,7 @@ The following Dockerfile updates the image:
     # continue with image build ...
     RUN emerge -auDN --with-bdeps=y @world
     
+### Limitations
 
+Some MKG options do not work within containers. See [MKG help](https://github.com/fabnicol/mkg/wiki/3.-Command-line-options) for details.     
+  
