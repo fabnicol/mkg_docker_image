@@ -81,10 +81,14 @@ RUN emerge-webrsync 2>&1 | tee -a log
 RUN emerge -uDN --with-bdeps=y @world 2>&1 | tee -a log \
     && echo "[MSG] Docker image built! Launching depclean..."
 RUN emerge --depclean 2>&1 | tee -a log
+RUN emerge --unmerge gentoo-sources
 RUN revdep-rebuild 2>&1 | tee -a log \
       && echo "[MSG] Docker image ready. Check build log."
 RUN env-update 
 RUN rm -rf /var/cache/distfiles  /var/tmp/* /tmp/* /var/log/* /var/db/repos/gentoo/*
+RUN rm -rf /usr/src/linux/*
 WORKDIR mkg
+
+# Do not use &
 ENTRYPOINT ["nohup", "./mkg", "gui=false"]
 
