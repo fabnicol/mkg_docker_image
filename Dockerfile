@@ -17,6 +17,7 @@ RUN echo '>=media-libs/libsdl-1.2.15-r9 X'  > new.use
 RUN echo '>=media-libs/libglvnd-1.3.2-r2 X' >> new.use
 RUN echo '>=x11-libs/libxkbcommon-1.0.3 X'  >> new.use
 RUN echo '>=dev-libs/libpcre2-10.35 pcre16' >> new.use
+RUN echo 'sys-fs/squashfs-tools lzma' >> new.use
 RUN echo 'app-emulation/virtualbox -alsa -debug -doc dtrace headless -java libressl -lvm -opengl -opus pam -pax_kernel -pulseaudio -python -qt5 -sdk udev -vboxwebsrv -vnc' >> new.use
 RUN mv new.use /etc/portage/package.use
 RUN echo '>=app-emulation/virtualbox-extpack-oracle-6.1.18.142142 PUEL' \
