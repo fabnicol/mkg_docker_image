@@ -53,7 +53,7 @@ jobs:
         -m "This release was automatically created by the Git Actions workflow corresponding to directory .github in the repository." \
         -m "The output are a checksum file and a compressed Docker image for the corresponding branch." \
         -m "File **mygentoo-${tag_name}.tar.xz** is the compressed custom MKG Docker image built from latest official stage3 and portage archives." \
-        -m "Download and uncompress it using `xz -d`." \
+        -m "Download and uncompress it using \`xz -d\`." \
         -m "To create an updated Gentoo distribution, start a Docker image as indicated in the README.
         -m "You can create an install ISO and a CloneZilla installer medium /dev/sdX by running:" \
         -m "     # mkg $tag_name from_vm vm=name_of_your_VB_machine device_installer ext_device=sdX gentoo.iso"  \
