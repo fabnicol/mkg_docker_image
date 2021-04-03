@@ -26,7 +26,7 @@ In the source directory, run:
 > $ sudo docker build -t mygentoo:1.0 .   
    
 Adjust with the tag name you want (here mygentoo:1.0).   
-Allow for some time (possibly several hours) to build, as all is built from source.  
+Allow some time (possibly several hours) to build, as all is built from source.  
 
 ### (Optional) Compress the image
 
