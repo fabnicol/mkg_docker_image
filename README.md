@@ -64,7 +64,7 @@ The resulting compressed tarball is about 15 % the size of the Docker image crea
 Otherwise (depending on versions), clone the *mkg* repository:   
 `# git clone --depth=1 https://github.com/fabnicol/mkg.git`   
 and then `cd` to directory **mkg**.   
-+ Run your `./mkg` command line, remembering to use `gui=false` and not to use `share_root`, `shared_dir` or `hot_install`      
++ Run your `./mkg` command line, remembering to use `gui=false` and not to use `share_root`, `hot_install`, `from_device`, `use_clonezilla_workflow=false` or `test_emerge`       
 + Preferably use:     
 `# nohup (...) &`    
 so that you can monitor the build in **nohup.out**   
