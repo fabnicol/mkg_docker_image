@@ -21,6 +21,7 @@ You created **docker.io/gentoo/stage3:amd64** and **docker.io/library/newgentoo:
    
 ### Then download or clone the present repository.
 
+In what follows, replace `1.0` with the tag of choice. A list of valid tags can be obtained by clicking on the Github **tags** button on this page.     
 In the source directory, run:
    
 > $ sudo docker build -t mygentoo:1.0 .   
@@ -84,7 +85,7 @@ Alternatively you can run your command line from the host, preferably in daemon 
 
 A nice way to avoid long command lines is to add to your **~/.bashrc**:
 
-`alias mkg='sudo docker run -dit --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log "$@"'`   
+`alias mkg="sudo docker run -dit --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log \"$@\""`   
   
 so that after running `source ~/.bashrc`, you just have to call mkg as if it were an installed script:
 
