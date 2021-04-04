@@ -33,12 +33,13 @@ jobs:
         docker version -f '{{.Server.Experimental}}'
         docker build --squash --file Dockerfile --tag mygentoo:release-master .
         wget https://github.com/jwilder/docker-squash/releases/download/v0.2.0/docker-squash-linux-amd64-v0.2.0.tar.gz
-        sudo tar -C /usr/local/bin -xzvf docker-squash-linux-amd64-v0.2.0.tar.gz
+        mkdir tmp
+        sudo tar -C tmp -xzvf docker-squash-linux-amd64-v0.2.0.tar.gz
         docker save -o mygentoo-release-master.0.tar mygentoo:release-master
-        docker-squash -i mygentoo-release-master.0.tar -o mygentoo-release-master.tar
+        sudo tmp/docker-squash -i mygentoo-release-master.0.tar -o mygentoo-release-master.tar
         xz -9 mygentoo-release-master.tar
-        b2sum mygentoo-release-master.tar.xz > checksums.txt
-        sha512sum mygentoo-release-master.tar.xz >> checksums.txt
+        echo "b2sum: $(b2sum mygentoo-release-master.tar.xz)" > checksums.txt
+        echo "sha512sum: $(sha512sum mygentoo-release-master.tar.xz)" >> checksums.txt
         
         
       
