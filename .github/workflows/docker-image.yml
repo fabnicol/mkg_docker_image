@@ -32,11 +32,7 @@ jobs:
         docker version -f '{{.Client.Experimental}}'
         docker version -f '{{.Server.Experimental}}'
         docker build --squash --file Dockerfile --tag mygentoo:release-master .
-        wget https://github.com/jwilder/docker-squash/releases/download/v0.2.0/docker-squash-linux-amd64-v0.2.0.tar.gz
-        mkdir tmp
-        sudo tar -C tmp -xzvf docker-squash-linux-amd64-v0.2.0.tar.gz
         docker save -o mygentoo-release-master.0.tar mygentoo:release-master
-        sudo tmp/docker-squash -i mygentoo-release-master.0.tar -o mygentoo-release-master.tar
         sudo xz -9 mygentoo-release-master.tar
         echo "b2sum: $(b2sum mygentoo-release-master.tar.xz)" > checksums.txt
         echo "sha512sum: $(sha512sum mygentoo-release-master.tar.xz)" >> checksums.txt
@@ -66,7 +62,7 @@ jobs:
         -m "Download and uncompress it using **xz -d**." \
         -m "To create an updated Gentoo distribution, start a Docker image as indicated in the README." \
         -m "You can create an install ISO and a CloneZilla installer medium /dev/sdX by running:" \
-        -m "    # mkg $tag_name device_installer ext_device=sdX gentoo.iso"  \
+        -m "    # mkg mygentoo:${tag_name} device_installer ext_device=sdX gentoo.iso"  \
         -m "You can then use this image with a CloneZilla CD to install Gentoo onto any adequate device." \
         "$tag_name"
       env:
