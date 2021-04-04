@@ -85,7 +85,7 @@ Alternatively you can run your command line from the host, preferably in daemon 
 
 A nice way to avoid long command lines is to add to your **~/.bashrc**:
 
-`alias mkg="sudo docker run -dit --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log \"$@\""`   
+`alias mkg="sudo docker run -dit --device /dev/vboxdrv:/dev/vboxdrv -v /dev/log:/dev/log $@"`   
   
 so that after running `source ~/.bashrc`, you just have to call mkg as if it were an installed script:
 
