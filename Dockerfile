@@ -91,5 +91,5 @@ RUN rm -rf /usr/src/linux/*
 WORKDIR mkg
 
 # Do not use &
-ENTRYPOINT ["nohup", "./mkg", "gui=false"]
+ENTRYPOINT ["nohup", "./mkg", "gui=false", "interactive=false"]
 
