@@ -25,7 +25,13 @@ jobs:
     - name: Build the Docker image
       run: |
         sudo apt install coreutils util-linux xz-utils
-        docker build . --file Dockerfile --tag mygentoo:release-master
+        echo $'{\n  "experimental": true\n}' | sudo tee /etc/docker/daemon.json
+        mkdir -p ~/.docker
+        echo $'{\n  "experimental": "enabled"\n}' | sudo tee ~/.docker/config.json
+        sudo service docker restart
+        docker version -f '{{.Client.Experimental}}'
+        docker version -f '{{.Server.Experimental}}'
+        docker build --squash --file Dockerfile --tag mygentoo:release-master .
         docker save -o mygentoo-release-master.tar mygentoo:release-master
         xz -9 mygentoo-release-master.tar
         b2sum mygentoo-release-master.tar.xz > checksums.txt
