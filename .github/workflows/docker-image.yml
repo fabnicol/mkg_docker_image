@@ -1,0 +1,69 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: 
+    - master 
+    - gnome
+  pull_request:
+    branches: 
+    - master 
+    - gnome
+  schedule:
+  - cron: "0 2 * * 1-5"
+  
+  workflow_dispatch:
+  
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+        sudo apt install coreutils util-linux xz-utils
+        echo $'{\n  "experimental": true\n}' | sudo tee /etc/docker/daemon.json
+        mkdir -p ~/.docker
+        echo $'{\n  "experimental": "enabled"\n}' | sudo tee ~/.docker/config.json
+        sudo service docker restart
+        docker version -f '{{.Client.Experimental}}'
+        docker version -f '{{.Server.Experimental}}'
+        docker build --squash --file Dockerfile --tag mygentoo:release-gnome .
+        docker save -o mygentoo-release-gnome.tar mygentoo:release-gnome
+        sudo xz -9 mygentoo-release-gnome.tar
+        echo "b2sum: $(b2sum mygentoo-release-gnome.tar.xz)" > checksums.txt
+        echo "sha512sum: $(sha512sum mygentoo-release-gnome.tar.xz)" >> checksums.txt
+        
+        
+      
+    - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      with:
+        delete_release: true # default: false
+        tag_name: release-gnome # tag name to delete
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Upload Release Assets
+      run: |
+        set -x
+        assets=()
+        tag_name="release-gnome"
+        for asset in checksums.txt mygentoo-${tag_name}.tar.xz; do
+        assets+=("-a" "$asset")
+        done
+        hub release create  "${assets[@]}" \
+        -m "Release $tag_name" \
+        -m "This release was automatically created by the Git Actions workflow corresponding to directory .github in the repository." \
+        -m "The output are a checksum file and a compressed Docker image for the corresponding branch." \
+        -m "File **mygentoo-${tag_name}.tar.xz** is the compressed custom MKG Docker image built from latest official stage3 and portage archives." \
+        -m "Download and uncompress it using **xz -d**." \
+        -m "To create an updated Gentoo distribution, start a Docker image as indicated in the README." \
+        -m "You can create an install ISO and a CloneZilla installer medium /dev/sdX by running:" \
+        -m "    # mkg mygentoo:${tag_name} device_installer ext_device=sdX gentoo.iso"  \
+        -m "You can then use this image with a CloneZilla CD to install Gentoo onto any adequate device." \
+        "$tag_name"
+      env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        

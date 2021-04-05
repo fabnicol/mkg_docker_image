@@ -17,6 +17,7 @@ RUN echo '>=media-libs/libsdl-1.2.15-r9 X'  > new.use
 RUN echo '>=media-libs/libglvnd-1.3.2-r2 X' >> new.use
 RUN echo '>=x11-libs/libxkbcommon-1.0.3 X'  >> new.use
 RUN echo '>=dev-libs/libpcre2-10.35 pcre16' >> new.use
+RUN echo 'sys-fs/squashfs-tools lzma' >> new.use
 RUN echo 'app-emulation/virtualbox -alsa -debug -doc dtrace headless -java libressl -lvm -opengl -opus pam -pax_kernel -pulseaudio -python -qt5 -sdk udev -vboxwebsrv -vnc' >> new.use
 RUN mv new.use /etc/portage/package.use
 RUN echo '>=app-emulation/virtualbox-extpack-oracle-6.1.18.142142 PUEL' \
@@ -43,7 +44,7 @@ RUN eselect profile set 1
 # which some packages want.
 
 RUN emerge -u dev-vcs/git 2>&1 | tee -a log
-RUN git clone -b gnome --single-branch --depth=1 https://github.com/fabnicol/mkg.git \
+RUN git clone -b gnome --single-branch --depth=1 https://github.com/fabnicol/mkg.git \ 
     && cd /mkg \
     && cp -vf .config /usr/src/linux  2>&1 | tee -a log
 RUN cd /usr/src/linux && make syncconfig \
@@ -81,10 +82,14 @@ RUN emerge-webrsync 2>&1 | tee -a log
 RUN emerge -uDN --with-bdeps=y @world 2>&1 | tee -a log \
     && echo "[MSG] Docker image built! Launching depclean..."
 RUN emerge --depclean 2>&1 | tee -a log
+RUN emerge --unmerge gentoo-sources
 RUN revdep-rebuild 2>&1 | tee -a log \
       && echo "[MSG] Docker image ready. Check build log."
 RUN env-update 
 RUN rm -rf /var/cache/distfiles  /var/tmp/* /tmp/* /var/log/* /var/db/repos/gentoo/*
+RUN rm -rf /usr/src/linux/*
 WORKDIR mkg
-ENTRYPOINT ["nohup", "./mkg", "gui=false", "&"]
+
+# Do not use &
+ENTRYPOINT ["nohup", "./mkg", "gui=false", "interactive=false"]
 
