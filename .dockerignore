@@ -19,4 +19,4 @@
 **/configure
 **/Makefile*
 **/*.a
-
+!/mkg/*
