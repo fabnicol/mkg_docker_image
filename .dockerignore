@@ -12,11 +12,6 @@
 **/*.pdf
 **/*.m4
 **/*.zip
-**/.git
-**/*.c
-**/*.h
-**/*.cpp
-**/configure
 **/Makefile*
 **/*.a
 !/mkg/*
