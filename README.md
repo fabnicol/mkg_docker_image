@@ -15,7 +15,7 @@ First build fresh official Gentoo portage and stage3 images, following indicatio
 `# TARGET=stage3-amd64 ./build.sh`  
 
 You created **gentoo/stage3:amd64** and **gentoo/portage:latest** with the above commands. 
-Alternatively, you can pull then DockerHub:
+Alternatively, you can pull then from DockerHub:
 
 `#docker image pull docker.io/gentoo/portage`    
 `#docker image pull docker.io/gentoo/stage3:amd64`   
