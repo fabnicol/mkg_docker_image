@@ -26,6 +26,10 @@ In what follows, replace `1.0` with the tag of choice. A list of valid tags can 
 In the source directory, run:
    
 > $ sudo docker build -t mygentoo:1.0 .   
+
+Or using `buildx` (advised):  
+
+> $ docker buildx build -t mygentoo:1.0 .  
    
 Adjust with the tag name you want (here mygentoo:1.0).   
 Allow some time (possibly several hours) to build, as all is built from source.  
