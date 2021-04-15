@@ -3,12 +3,12 @@ name: Docker Image CI
 on:
   push:
     branches: 
-    - master 
     - gnome
+    
   pull_request:
     branches: 
-    - master 
     - gnome
+    
   schedule:
   - cron: "0 2 * * 1-5"
   
