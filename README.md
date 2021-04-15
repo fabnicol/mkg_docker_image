@@ -2,6 +2,8 @@
 
 The container is created using a multi-stage build, which requires Docker >= 19.03.0.
 It draws upon the official [Gentoo stage3 AMD64 Docker image](https://github.com/gentoo/gentoo-docker-images)
+Docker images are built and released automatically by a Github Actions workflow. See the Release section of this site.   
+An occasional tag resulting from a Github Actions workflow is also uploaded to [DockerHub](https://hub.docker.com/repository/docker/fabnicol/mkg_docker_image/tags?page=1&ordering=last_updated).   
 
 ## Building the Docker image
 
