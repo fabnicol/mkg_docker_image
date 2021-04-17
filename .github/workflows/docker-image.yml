@@ -57,11 +57,10 @@ jobs:
         -m "This release was automatically created by the Git Actions workflow corresponding to directory .github in the repository." \
         -m "The output are a checksum file and a compressed Docker image for the corresponding branch." \
         -m "File **mygentoo-${tag_name}.tar.xz** is the compressed custom MKG Docker image built from latest official stage3 and portage archives." \
-        -m "Download and uncompress it using **xz -d**." \
         -m "To create an updated Gentoo distribution, start a Docker image as indicated in the README." \
-        -m "You can create an install ISO by running:" \
-        -m "    # mkg --privileged mygentoo:${tag_name} gentoo.iso"  \
-        -m "You can then use this image with a CloneZilla CD to install Gentoo onto any adequate device." \
+        -m "Alternatively, you can create an install ISO by running:" \
+        -m "    # mkg dockerize mygentoo:${tag_name} gentoo.iso [burn]"  \
+        -m "You can then use this ISO image to install Gentoo onto any adequate device." \
         "$tag_name"
       env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
