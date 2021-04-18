@@ -1,0 +1,17 @@
+**/*.pro
+**/*.md
+!README.md
+**/*.gz
+**/*.bz2
+**/*.xz
+**/*.tar
+**/*.tar.xz
+**/*.tar.gz
+**/*.tar.bz2
+**/*.1
+**/*.pdf
+**/*.m4
+**/*.zip
+**/Makefile*
+**/*.a
+!/mkg/*
