@@ -16,6 +16,12 @@ If this does not work, try to fetch back your ISO installer using the standard c
    
 (Replace tag `release-master` with `release-gnome` is you checked out the **gnome** branch rather than 
 **master**.)
+
+Alternatively, you can manually download a compressed Docker image from the release section, uncompress it and load it:
+
+`# xz -d *.tar.xz && docker load -i mygentoo-release-[master/gnome].tar`   
+
+then run the Docker image and launch MKG within it manually (see below **Using the Docker image**).     
     
 ## The long story
 
