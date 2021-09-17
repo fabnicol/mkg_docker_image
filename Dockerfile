@@ -29,10 +29,8 @@ RUN emerge --unmerge dev-python/* 2>&1 | tee -a log
 RUN emerge -uDN dev-lang/python 2>&1 | tee -a log
 RUN emerge -uDN dev-python/setuptools 2>&1 | tee -a log
 RUN emerge -u1 portage
-RUN emerge -u sys-devel/gcc
 RUN emerge gcc-config
 RUN gcc-config $(gcc-config -l| wc -l)  && source /etc/profile
-RUN emerge glibc binutils
 
 # Kernel sources must be available for some package merges
 
