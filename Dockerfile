@@ -27,6 +27,7 @@ RUN echo '>=sys-apps/sandbox-2.21 ~amd64' > /etc/portage/package.accept_keywords
 RUN echo 'dev-lang/perl ~amd64' >> /etc/portage/package.accept_keywords/perl
 # Notably dev-python/setuptools and a couple of other python dev tools
 # will be obsolete. No other cautious way than unmerge/remerge
+RUN emerge-webrsync 2>&1 | tee -a log
 RUN emerge app-admin/perl-cleaner
 RUN perl-cleaner --reallyall
 RUN emerge --unmerge dev-python/* 2>&1 | tee -a log
@@ -80,7 +81,6 @@ RUN emerge libisoburn 2>&1 | tee -a log
 # Should it fail, reverting would be easier.
 # Prefer webrsync over sync, to alleviate rsync server load
 
-RUN emerge-webrsync 2>&1 | tee -a log
 RUN emerge -uDN --with-bdeps=y @world 2>&1 | tee -a log \
     && echo "[MSG] Docker image built! Launching depclean..."
 RUN emerge --depclean 2>&1 | tee -a log
