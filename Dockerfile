@@ -28,6 +28,7 @@ RUN echo 'dev-lang/perl ~amd64' >> /etc/portage/package.accept_keywords/perl
 # Notably dev-python/setuptools and a couple of other python dev tools
 # will be obsolete. No other cautious way than unmerge/remerge
 RUN emerge-webrsync 2>&1 | tee -a log
+RUN emerge -uDN --with-bdeps=y @world
 RUN emerge app-admin/perl-cleaner
 RUN perl-cleaner --reallyall
 RUN emerge --unmerge dev-python/* 2>&1 | tee -a log
