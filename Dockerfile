@@ -34,8 +34,8 @@ RUN perl-cleaner --reallyall
 # Fix libcrypt migration issue
 RUN emerge -v1 --unmerge virtual/libcrypt
 RUN emerge -v1 --backtrack=300 virtual/libcrypt sys-libs/libxcrypt
-RUN emerge --unmerge dev-perl/Locale-gettext perl-core/Encode virtual/perl-Encode
-RUN emerge -v1 --backtrack=1000 --with-bdeps=y --keep-going dev-lang/perl
+RUN emerge --unmerge dev-perl/Locale-gettext virtual/perl-Encode
+RUN emerge -1 --backtrack=1500 -uDN --keep-going dev-lang/perl
 RUN emerge -v1 
 RUN emerge -uDN --backtrack=300 --with-bdeps=y --keep-going @world
 RUN emerge -uDN --backtrack=300 --with-bdeps=y --keep-going @world
