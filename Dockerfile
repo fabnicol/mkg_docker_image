@@ -89,8 +89,7 @@ RUN emerge libisoburn 2>&1 | tee -a log
 # Should it fail, reverting would be easier.
 # Prefer webrsync over sync, to alleviate rsync server load
 
-RUN emerge -uDN --with-bdeps=y @world 2>&1 | tee -a log \
-    && echo "[MSG] Docker image built! Launching depclean..."
+
 RUN emerge --depclean 2>&1 | tee -a log
 RUN emerge --unmerge gentoo-sources
 RUN revdep-rebuild 2>&1 | tee -a log \
