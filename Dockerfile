@@ -30,14 +30,13 @@ RUN echo 'dev-lang/perl ~amd64' >> /etc/portage/package.accept_keywords/perl
 # will be obsolete. No other cautious way than unmerge/remerge
 RUN emerge-webrsync 2>&1 | tee -a log
 RUN emerge app-admin/perl-cleaner
-RUN perl-cleaner --reallyall
 # Fix libcrypt migration issue
 RUN emerge -v1 --unmerge virtual/libcrypt
 RUN emerge -v1 --backtrack=300 virtual/libcrypt sys-libs/libxcrypt
-RUN emerge --unmerge dev-perl/Locale-gettext virtual/perl-Encode
-RUN emerge -1 --backtrack=1500 -uDN --keep-going dev-lang/perl
-RUN emerge -v1 
-RUN emerge -uDN --backtrack=300 --with-bdeps=y --keep-going @world
+RUN emerge --unmerge dev-perl/Locale-gettext
+RUN emerge --unmerge 'perl-core/*' 'virtual/perl-*' 
+RUN emerge -1 --backtrack=1500 -uDN --keep-going --ignore-built-slot-operator-deps=y dev-lang/perl 
+RUN perl-cleaner --reallyall
 RUN emerge -uDN --backtrack=300 --with-bdeps=y --keep-going @world
 RUN emerge --unmerge dev-python/* 2>&1 | tee -a log
 RUN emerge -uDN dev-lang/python 2>&1 | tee -a log
