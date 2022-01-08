@@ -4,7 +4,9 @@ Docker images are released automatically, signed and verified by third-party wor
 
 ## The short story
 
-To create [an updated (AMD64) Gentoo ISO installer using MKG](https://github.com/fabnicol/mkg), just add option `dockerize` to command line with administrative rights and let it go:
+Docker images can be automatically downloaded and used to create [an updated (AMD64) Gentoo ISO installer with MKG](https://github.com/fabnicol/mkg).   
+The MKG script will manage the docker image for you and build the Gentoo installer within the container.     
+To enable this behaviour, just add option `dockerize` to command line with administrative rights and let it go:
 
 `# ./mkg dockerize gentoo.iso`   
 
