@@ -103,7 +103,7 @@ Add `--squash` after `build`:
 
 > $ sudo docker build --squash -t mygentoo:1.0 .   
 
-This experimental feature will significantly cut down image size.    
+This experimental feature will cut down the size of the image by half.    
 Optionally clean the container of kernel sources:   
    
 `# docker run --entrypoint bash -it mygentoo:1.0`       
