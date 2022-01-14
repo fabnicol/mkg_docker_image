@@ -2,7 +2,9 @@
 FROM gentoo/portage:latest AS portage
 
 # image is based on stage3-amd64
-FROM gentoo/stage3:amd64
+# tag amd64 is too old.
+
+FROM gentoo/stage3
 
 # copy the entire portage volume in
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
