@@ -98,7 +98,12 @@ Allow some time (possibly several hours) to build, as all is built from source.
    
 #### (Optional) Compress the image
 
-For packaging purposes it is advised to compress the resulting image using [docker-squash](https://github.com/jwilder/docker-squash).  
+For packaging purposes it is advised to compress the resulting image using the experimental version of Docker.
+Add `--squash` after `build`:
+
+> $ sudo docker build --squash -t mygentoo:1.0 .   
+
+This experimental feature will significantly cut down image size.    
 Optionally clean the container of kernel sources:   
    
 `# docker run --entrypoint bash -it mygentoo:1.0`       
