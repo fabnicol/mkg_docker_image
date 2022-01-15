@@ -59,7 +59,7 @@ jobs:
         -m "File **mygentoo-${tag_name}.tar.xz** is the compressed custom MKG Docker image built from latest official stage3 and portage archives." \
         -m "To create an updated Gentoo distribution, start a Docker image as indicated in the README." \
         -m "Alternatively, you can create an install ISO by running:" \
-        -m "    # mkg dockerize mygentoo:${tag_name} gentoo.iso [burn]"  \
+        -m "    # mkg dockerize gentoo.iso [burn]"  \
         -m "You can then use this ISO image to install Gentoo onto any adequate device." \
         "$tag_name"
       env:
