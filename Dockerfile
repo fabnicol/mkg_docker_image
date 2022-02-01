@@ -25,9 +25,13 @@ RUN echo 'app-emulation/virtualbox -alsa -debug -doc dtrace headless -java libre
 RUN mv new.use /etc/portage/package.use
 RUN echo '>=app-emulation/virtualbox-extpack-oracle-6.1.18.142142 PUEL' \
            >> /etc/portage/package.license
-RUN mkdir -p /etc/portage/package.accept_keywords 
+RUN mkdir -p /etc/portage/package.accept_keywords
 RUN echo '>=sys-apps/sandbox-2.21 ~amd64' > /etc/portage/package.accept_keywords/sandbox
 RUN echo 'dev-lang/perl ~amd64' >> /etc/portage/package.accept_keywords/perl
+RUN echo '>=app-emulation/virtualbox-6.1.24 ~amd64' > /etc/portage/package.accept_keywords/virtualbox
+RUN echo '>=app-emulation/virtualbox-modules-6.1.24 ~amd64' >> /etc/portage/package.accept_keywords/virtualbox
+RUN echo '>=app-emulation/virtualbox-extpack-oracle-6.1.24 ~amd64' >> /etc/portage/package.accept_keywords/virtualbox
+
 # Notably dev-python/setuptools and a couple of other python dev tools
 # will be obsolete. No other cautious way than unmerge/remerge
 RUN emerge-webrsync 2>&1 | tee -a log
@@ -36,9 +40,9 @@ RUN emerge app-admin/perl-cleaner
 RUN emerge -v1 --unmerge virtual/libcrypt
 RUN emerge -v1 --backtrack=300 virtual/libcrypt sys-libs/libxcrypt
 RUN emerge --unmerge dev-perl/Locale-gettext
-RUN emerge --unmerge 'perl-core/*' 'virtual/perl-*' 
+RUN emerge --unmerge 'perl-core/*' 'virtual/perl-*'
 RUN emerge -1 --backtrack=1500 shadow
-RUN emerge -1 --backtrack=1500 -uDN --keep-going --ignore-built-slot-operator-deps=y dev-lang/perl 
+RUN emerge -1 --backtrack=1500 -uDN --keep-going --ignore-built-slot-operator-deps=y dev-lang/perl
 RUN perl-cleaner --reallyall
 RUN emerge -uDN --backtrack=300 --with-bdeps=y --keep-going @world
 RUN emerge --unmerge dev-python/* 2>&1 | tee -a log
@@ -92,6 +96,9 @@ RUN emerge libisoburn 2>&1 | tee -a log
 # Should it fail, reverting would be easier.
 # Prefer webrsync over sync, to alleviate rsync server load
 
+RUN emerge-webrsync 2>&1 | tee -a log
+RUN emerge -uDN --with-bdeps=y @world 2>&1 | tee -a log \
+       && echo "[MSG] Docker image built! Launching depclean..."
 
 RUN emerge --depclean 2>&1 | tee -a log
 RUN emerge --unmerge gentoo-sources
