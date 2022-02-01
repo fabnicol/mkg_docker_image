@@ -76,6 +76,14 @@ RUN emerge eix && eix-update
 RUN emerge dos2unix libisofs cdrtools util-linux squashfs-tools \
      2>&1 | tee -a log
 RUN emerge libisoburn 2>&1 | tee -a log
+
+# Now, world updates may be considered anfter sync.
+# Should it fail, reverting would be easier.
+# Prefer webrsync over sync, to alleviate rsync server load
+
+RUN emerge-webrsync 2>&1 | tee -a log
+RUN emerge -uDN --with-bdeps=y @world 2>&1 | tee -a log \
+    && echo "[MSG] Docker image built! Launching depclean..."
 RUN emerge --depclean 2>&1 | tee -a log
 RUN emerge --unmerge gentoo-sources
 RUN revdep-rebuild 2>&1 | tee -a log \
