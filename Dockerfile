@@ -22,7 +22,12 @@ RUN echo 'app-emulation/virtualbox -alsa -debug -doc dtrace headless -java libre
 RUN mv new.use /etc/portage/package.use
 RUN echo '>=app-emulation/virtualbox-extpack-oracle-6.1.18.142142 PUEL' \
            >> /etc/portage/package.license
-RUN mkdir -p /etc/portage/package.accept_keywords && echo '>=sys-apps/sandbox-2.21 ~amd64' > /etc/portage/package.accept_keywords/sandbox
+RUN mkdir -p /etc/portage/package.accept_keywords
+RUN echo '>=sys-apps/sandbox-2.21 ~amd64' > /etc/portage/package.accept_keywords/sandbox
+RUN echo '>=app-emulation/virtualbox-6.1.24 ~amd64' > /etc/portage/package.accept_keywords/virtualbox
+RUN echo '>=app-emulation/virtualbox-modules-6.1.24 ~amd64' >> /etc/portage/package.accept_keywords/virtualbox
+RUN echo '>=app-emulation/virtualbox-extpack-oracle-6.1.24 ~amd64' >> /etc/portage/package.accept_keywords/virtualbox
+
 # Notably dev-python/setuptools and a couple of other python dev tools
 # will be obsolete. No other cautious way than unmerge/remerge
 RUN emerge --unmerge dev-python/* 2>&1 | tee -a log
