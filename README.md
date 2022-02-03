@@ -228,5 +228,19 @@ The following Dockerfile updates the image:
     RUN emerge -auDN --with-bdeps=y @world
     
 
+### Installing additional software
+ 
+Images have been somewhat streamlined to save disk space. Should you
+need to
+install additional software, please follow the following steps:   
+
+    host# docker run -it --entrypoint bash -v /dev/log:/dev/log [your
+     image]
+    container# emerge --sync
+    container# [optional: eix-update]
+    container# emerge -1 --ask [your software]   
+
+In particular, you will need to do install `qemu` to run `share_root` and
+inspect a faulty **.vdi** virtual disk when debugging a possible crash.  
 
   
