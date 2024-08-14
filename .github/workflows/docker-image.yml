@@ -27,8 +27,6 @@ jobs:
         sudo apt install coreutils util-linux xz-utils
         mkdir -p ~/.docker
         sudo service docker restart
-        docker version -f '{{.Client.Experimental}}'
-        docker version -f '{{.Server.Experimental}}'
         docker build --squash --file Dockerfile --tag mygentoo:release-master .
         docker save -o mygentoo-release-master.tar mygentoo:release-master
         sudo xz -9 mygentoo-release-master.tar
