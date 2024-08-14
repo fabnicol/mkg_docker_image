@@ -24,7 +24,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: |
-        sudo apt install coreutils util-linux xz-utils
+        sudo apt install coreutils util-linux xz-utils hub
         mkdir -p ~/.docker
         sudo service docker restart
         docker build --squash --file Dockerfile --tag mygentoo:release-master .
